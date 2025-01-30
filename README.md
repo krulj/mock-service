@@ -1,4 +1,4 @@
-# mock-service
+# simple-service
 Simple service written in Java using Spring Boot. 
 
 Exposes three API endpoints:
