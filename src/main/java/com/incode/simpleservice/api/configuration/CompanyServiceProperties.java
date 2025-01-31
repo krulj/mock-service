@@ -2,8 +2,8 @@ package com.incode.simpleservice.api.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("service.third-party")
-public class BackendServiceProperties {
+@ConfigurationProperties("company.third-party")
+public class CompanyServiceProperties {
 
   private String freeUrl;
   private String premiumUrl;

@@ -1,6 +1,6 @@
 package com.incode.simpleservice.api.service;
 
-import com.incode.simpleservice.api.configuration.BackendServiceProperties;
+import com.incode.simpleservice.api.configuration.CompanyServiceProperties;
 import com.incode.simpleservice.api.dto.CompanyDTO;
 import com.incode.simpleservice.api.dto.CompanyMatchDTO;
 import com.incode.simpleservice.api.dto.CompanyQueryDTO;
@@ -21,16 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@EnableConfigurationProperties(BackendServiceProperties.class)
-public class BackendService {
+@EnableConfigurationProperties(CompanyServiceProperties.class)
+public class CompanyService {
 
-  private static final Logger logger = LoggerFactory.getLogger(BackendService.class);
+  private static final Logger logger = LoggerFactory.getLogger(CompanyService.class);
   private static final String QUERY = "query=";
 
   private final RestTemplate restTemplate;
-  private final BackendServiceProperties properties;
+  private final CompanyServiceProperties properties;
 
-  public BackendService(BackendServiceProperties properties, RestTemplate restTemplate) {
+  public CompanyService(CompanyServiceProperties properties, RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
     this.properties = properties;
   }
@@ -42,7 +42,7 @@ public class BackendService {
 
     boolean freeServiceUp = true;
     try {
-      List<CompanyDTO> freeCompanies = getFreeCompanies(query);
+      List<CompanyDTO> freeCompanies = getFreeActiveCompanies(query);
       result.addAll(freeCompanies);
     } catch (ServiceUnavailable e) {
       freeServiceUp = false;
@@ -52,7 +52,7 @@ public class BackendService {
     boolean premiumServiceUp = true;
     if (!freeServiceUp || result.isEmpty()) {
       try {
-        List<CompanyDTO> premiumCompanies = getPremiumCompanies(query);
+        List<CompanyDTO> premiumCompanies = getPremiumActiveCompanies(query);
         result.addAll(premiumCompanies);
       } catch (ServiceUnavailable e) {
         premiumServiceUp = false;
@@ -73,7 +73,7 @@ public class BackendService {
     return new CompanyQueryDTO(verificationId, query, match);
   }
 
-  private List<CompanyDTO> getFreeCompanies(String query) {
+  private List<CompanyDTO> getFreeActiveCompanies(String query) {
     List<CompanyDTO> result = new ArrayList<>();
 
     String freeUrl = properties.getFreeUrl() + "?" + QUERY + query;
@@ -81,12 +81,13 @@ public class BackendService {
 
     if (response.hasBody() && response.getBody().length > 0) {
       List<CompanyDTO> companies = ThirdPartyApiManipulator.fromFreeApi(response.getBody());
-      result.addAll(companies);
+      List<CompanyDTO> active = companies.stream().filter(CompanyDTO::isActive).toList();
+      result.addAll(active);
     }
     return result;
   }
 
-  private List<CompanyDTO> getPremiumCompanies(String query) {
+  private List<CompanyDTO> getPremiumActiveCompanies(String query) {
     List<CompanyDTO> result = new ArrayList<>();
 
     String freeUrl = properties.getPremiumUrl() + "?" + QUERY + query;
@@ -94,7 +95,8 @@ public class BackendService {
 
     if (response.hasBody() && response.getBody().length > 0) {
       List<CompanyDTO> companies = ThirdPartyApiManipulator.fromPremiumApi(response.getBody());
-      result.addAll(companies);
+      List<CompanyDTO> active = companies.stream().filter(CompanyDTO::isActive).toList();
+      result.addAll(active);
     }
     return result;
   }
