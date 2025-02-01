@@ -15,7 +15,7 @@ public class ParameterValidator {
     try {
       UUID.fromString(uuid);
     } catch (IllegalArgumentException e) {
-      throw new BadRequestException(ServiceErrorCodes.INVALID_REQUEST_PARAM);
+      throw new BadRequestException(ServiceErrorCodes.INVALID_UUID_REQUEST_PARAM);
     }
 
   }

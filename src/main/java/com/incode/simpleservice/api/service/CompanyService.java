@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpServerErrorException.ServiceUnavailable;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,8 +42,7 @@ public class CompanyService {
     this.verificationService = verificationService;
   }
 
-  public CompanyQueryDTO queryCompaniesByIdentification(@RequestParam(name = "query") String query,
-                                                        @RequestParam(name = "verificationId") String verificationId) {
+  public CompanyQueryDTO queryCompaniesByIdentification(String query, String verificationId) {
 
     List<CompanyDTO> companyDTOs = new ArrayList<>();
     String source = null;
