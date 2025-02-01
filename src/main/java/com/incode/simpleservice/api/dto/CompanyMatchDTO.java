@@ -14,4 +14,12 @@ public record CompanyMatchDTO(
     CompanyDTO match,
     List<CompanyDTO> otherResults
 ) {
+
+  public CompanyMatchDTO(String message) {
+    this(message, null, null);
+  }
+
+  public CompanyMatchDTO(CompanyDTO match, List<CompanyDTO> otherResults) {
+    this(null, match, otherResults);
+  }
 }

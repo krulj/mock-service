@@ -6,8 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "free_service_companies")
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class) // Use same class as entity to speed up deserialization from json
 public class FreeServiceCompany {
 
