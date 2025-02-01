@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class FreeServiceCompany {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // By assignment CIN is not guaranteed to be unique
 
   private String cin;

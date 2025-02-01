@@ -9,12 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "free_service_companies")
+@Table(name = "premium_service_companies")
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class) // Use same class as entity to speed up deserialization from json
 public class PremiumServiceCompany {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; // By assignment CIN is not guaranteed to be unique
 
   private String companyIdentificationNumber;
