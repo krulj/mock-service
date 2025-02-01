@@ -23,7 +23,7 @@ public class VerificationService {
   }
 
   public VerificationDTO saveVerificationData(Verification verification) {
-    logger.info("Saving verification data: {}", verification);
+    logger.debug("Saving verification data: {}", verification);
     try {
       Verification result = verificationDAO.save(verification);
       return VerificationManipulator.toDto(result);
@@ -34,7 +34,7 @@ public class VerificationService {
   }
 
   public VerificationDTO getByVerificationId(String id) {
-    logger.info("Getting verification by id: {}", id);
+    logger.debug("Getting verification by id: {}", id);
     Verification verification = verificationDAO.getByVerificationId(id);
     if (verification == null) {
       throw new BadRequestException(ServiceErrorCodes.VERIFICATION_NOT_FOUND);

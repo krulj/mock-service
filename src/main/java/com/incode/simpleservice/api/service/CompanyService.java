@@ -42,8 +42,15 @@ public class CompanyService {
     this.verificationService = verificationService;
   }
 
+  /**
+   * Get Companies that are matching query string.
+   * Depends on third-party API.
+   * @param query query string
+   * @param verificationId UUID of request
+   * @return Object with matched companies
+   */
   public CompanyQueryDTO queryCompaniesByIdentification(String query, String verificationId) {
-
+    logger.debug("Getting companies for query '{}' and verificationId '{}'", query, verificationId);
     List<CompanyDTO> companyDTOs = new ArrayList<>();
     String source = null;
 
