@@ -6,11 +6,11 @@ import com.incode.simpleservice.api.configuration.CompanyServiceProperties;
 import com.incode.simpleservice.api.dto.CompanyDTO;
 import com.incode.simpleservice.api.dto.CompanyMatchDTO;
 import com.incode.simpleservice.api.dto.CompanyQueryDTO;
+import com.incode.simpleservice.api.dto.FreeServiceCompanyDTO;
+import com.incode.simpleservice.api.dto.PremiumServiceCompanyDTO;
 import com.incode.simpleservice.api.exception.ServiceErrorCodes;
 import com.incode.simpleservice.api.manipulator.ThirdPartyApiManipulator;
 import com.incode.simpleservice.api.repository.entity.Verification;
-import com.incode.simpleservice.third_party.dto.FreeServiceCompaniesDTO;
-import com.incode.simpleservice.third_party.dto.PremiumServiceCompaniesDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -84,7 +84,7 @@ public class CompanyService {
     List<CompanyDTO> result = new ArrayList<>();
 
     String freeUrl = properties.getFreeUrl() + "?" + QUERY + query;
-    ResponseEntity<FreeServiceCompaniesDTO[]> response = restTemplate.getForEntity(freeUrl, FreeServiceCompaniesDTO[].class);
+    ResponseEntity<FreeServiceCompanyDTO[]> response = restTemplate.getForEntity(freeUrl, FreeServiceCompanyDTO[].class);
 
     if (response.getBody() != null && response.getBody().length > 0) {
       List<CompanyDTO> companies = ThirdPartyApiManipulator.fromFreeApi(response.getBody());
@@ -98,7 +98,7 @@ public class CompanyService {
     List<CompanyDTO> result = new ArrayList<>();
 
     String freeUrl = properties.getPremiumUrl() + "?" + QUERY + query;
-    ResponseEntity<PremiumServiceCompaniesDTO[]> response = restTemplate.getForEntity(freeUrl, PremiumServiceCompaniesDTO[].class);
+    ResponseEntity<PremiumServiceCompanyDTO[]> response = restTemplate.getForEntity(freeUrl, PremiumServiceCompanyDTO[].class);
 
     if (response.getBody() != null && response.getBody().length > 0) {
       List<CompanyDTO> companies = ThirdPartyApiManipulator.fromPremiumApi(response.getBody());

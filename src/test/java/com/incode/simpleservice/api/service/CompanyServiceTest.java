@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.incode.simpleservice.api.configuration.CompanyServiceProperties;
 import com.incode.simpleservice.api.dto.CompanyQueryDTO;
+import com.incode.simpleservice.api.dto.FreeServiceCompanyDTO;
+import com.incode.simpleservice.api.dto.PremiumServiceCompanyDTO;
 import com.incode.simpleservice.api.exception.ServiceErrorCodes;
-import com.incode.simpleservice.third_party.dto.FreeServiceCompaniesDTO;
-import com.incode.simpleservice.third_party.dto.PremiumServiceCompaniesDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ class CompanyServiceTest {
   @Test
   public void testQueryCompaniesByIdentification_freeService_success() throws JsonProcessingException {
     // Given
-    FreeServiceCompaniesDTO[] companies = {new FreeServiceCompaniesDTO("ABCD", "first", null, null, true)};
+    FreeServiceCompanyDTO[] companies = {new FreeServiceCompanyDTO("ABCD", "first", null, null, true)};
     mockServer.expect(MockRestRequestMatchers.requestTo(FREE_URL + "?query=" + QUERY_STRING))
         .andRespond(MockRestResponseCreators
             .withSuccess(objectMapper.writeValueAsString(companies), MediaType.APPLICATION_JSON));
@@ -78,11 +78,10 @@ class CompanyServiceTest {
         .andRespond(MockRestResponseCreators
             .withServiceUnavailable());
 
-    PremiumServiceCompaniesDTO[] companies = {new PremiumServiceCompaniesDTO("ABCD", "first", null, null, true)};
+    PremiumServiceCompanyDTO[] companies = {new PremiumServiceCompanyDTO("ABCD", "first", null, null, true)};
     mockServer.expect(MockRestRequestMatchers.requestTo(PREMIUM_URL + "?query=" + QUERY_STRING))
         .andRespond(MockRestResponseCreators
             .withSuccess(objectMapper.writeValueAsString(companies), MediaType.APPLICATION_JSON));
-
 
     // When
     CompanyQueryDTO result = service.queryCompaniesByIdentification(QUERY_STRING, VERIFICATION_STRING);
@@ -104,7 +103,6 @@ class CompanyServiceTest {
 
     mockServer.expect(MockRestRequestMatchers.requestTo(PREMIUM_URL + "?query=" + QUERY_STRING))
         .andRespond(MockRestResponseCreators.withServiceUnavailable());
-
 
     // When
     CompanyQueryDTO result = service.queryCompaniesByIdentification(QUERY_STRING, VERIFICATION_STRING);

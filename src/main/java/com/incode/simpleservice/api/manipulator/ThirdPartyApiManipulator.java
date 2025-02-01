@@ -1,8 +1,8 @@
 package com.incode.simpleservice.api.manipulator;
 
 import com.incode.simpleservice.api.dto.CompanyDTO;
-import com.incode.simpleservice.third_party.dto.FreeServiceCompaniesDTO;
-import com.incode.simpleservice.third_party.dto.PremiumServiceCompaniesDTO;
+import com.incode.simpleservice.api.dto.FreeServiceCompanyDTO;
+import com.incode.simpleservice.api.dto.PremiumServiceCompanyDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ public class ThirdPartyApiManipulator {
     // Utility
   }
 
-  public static CompanyDTO fromFreeApi(FreeServiceCompaniesDTO company) {
+  public static CompanyDTO fromFreeApi(FreeServiceCompanyDTO company) {
     return new CompanyDTO(
         company.cin(),
         company.name(),
@@ -23,11 +23,11 @@ public class ThirdPartyApiManipulator {
     );
   }
 
-  public static List<CompanyDTO> fromFreeApi(FreeServiceCompaniesDTO[] companies) {
+  public static List<CompanyDTO> fromFreeApi(FreeServiceCompanyDTO[] companies) {
     return Arrays.stream(companies).map(ThirdPartyApiManipulator::fromFreeApi).toList();
   }
 
-  public static CompanyDTO fromPremiumApi(PremiumServiceCompaniesDTO company) {
+  public static CompanyDTO fromPremiumApi(PremiumServiceCompanyDTO company) {
     return new CompanyDTO(
         company.companyIdentificationNumber(),
         company.companyName(),
@@ -37,7 +37,7 @@ public class ThirdPartyApiManipulator {
     );
   }
 
-  public static List<CompanyDTO> fromPremiumApi(PremiumServiceCompaniesDTO[] companies) {
+  public static List<CompanyDTO> fromPremiumApi(PremiumServiceCompanyDTO[] companies) {
     return Arrays.stream(companies).map(ThirdPartyApiManipulator::fromPremiumApi).toList();
   }
 }
