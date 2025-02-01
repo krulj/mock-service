@@ -52,7 +52,7 @@ class CompanyServiceTest {
 
 
   @Test
-  public void testQueryCompaniesByIdentification_freeService_success() throws JsonProcessingException {
+  void testQueryCompaniesByIdentification_freeService_success() throws JsonProcessingException {
     // Given
     FreeServiceCompanyDTO[] companies = {new FreeServiceCompanyDTO("ABCD", "first", null, null, true)};
     mockServer.expect(MockRestRequestMatchers.requestTo(FREE_URL + "?query=" + QUERY_STRING))
@@ -72,7 +72,7 @@ class CompanyServiceTest {
   }
 
   @Test
-  public void testQueryCompaniesByIdentification_failToPremium_success() throws JsonProcessingException {
+  void testQueryCompaniesByIdentification_failToPremium_success() throws JsonProcessingException {
     // Given
     mockServer.expect(MockRestRequestMatchers.requestTo(FREE_URL + "?query=" + QUERY_STRING))
         .andRespond(MockRestResponseCreators
@@ -96,7 +96,7 @@ class CompanyServiceTest {
   }
 
   @Test
-  public void testQueryCompaniesByIdentification_thirdPartiesUnavailable_emptyResponse() throws JsonProcessingException {
+  void testQueryCompaniesByIdentification_thirdPartiesUnavailable_emptyResponse() throws JsonProcessingException {
     // Given
     mockServer.expect(MockRestRequestMatchers.requestTo(FREE_URL + "?query=" + QUERY_STRING))
         .andRespond(MockRestResponseCreators.withServiceUnavailable());
@@ -117,7 +117,7 @@ class CompanyServiceTest {
   }
 
   @Test
-  public void testQueryCompaniesByIdentification_noRecordsForQuery() throws JsonProcessingException {
+  void testQueryCompaniesByIdentification_noRecordsForQuery() throws JsonProcessingException {
     // Given
     mockServer.expect(MockRestRequestMatchers.requestTo(FREE_URL + "?query=" + QUERY_STRING))
         .andRespond(MockRestResponseCreators.withSuccess("[]", MediaType.APPLICATION_JSON));
