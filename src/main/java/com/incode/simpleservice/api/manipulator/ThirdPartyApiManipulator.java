@@ -9,6 +9,10 @@ import java.util.List;
 
 public class ThirdPartyApiManipulator {
 
+  private ThirdPartyApiManipulator() {
+    // Utility
+  }
+
   public static CompanyDTO fromFreeApi(FreeServiceCompaniesDTO company) {
     return new CompanyDTO(
         company.cin(),

@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpServerErrorException.ServiceUnavailable;
 import org.springframework.web.client.RestTemplate;
@@ -65,7 +64,7 @@ public class CompanyService {
       try {
         List<CompanyDTO> premiumCompanies = getPremiumActiveCompanies(query);
         companyDTOs.addAll(premiumCompanies);
-        source = properties.getFreeUrl();
+        source = properties.getPremiumUrl();
       } catch (ServiceUnavailable e) {
         premiumServiceUp = false;
         logger.warn("Premium third party service unavailable");
@@ -77,7 +76,7 @@ public class CompanyService {
     CompanyQueryDTO result = new CompanyQueryDTO(verificationId, query, match);
 
     // Insert into verifications table
-    Verification verification = createVerificationEntity(query, verificationId, result, source);
+    Verification verification = createVerificationEntity(verificationId, query, result, source);
     verificationService.saveVerificationData(verification);
 
     return result;
@@ -89,7 +88,7 @@ public class CompanyService {
     String freeUrl = properties.getFreeUrl() + "?" + QUERY + query;
     ResponseEntity<FreeServiceCompaniesDTO[]> response = restTemplate.getForEntity(freeUrl, FreeServiceCompaniesDTO[].class);
 
-    if (response.hasBody() && response.getBody().length > 0) {
+    if (response.getBody() != null && response.getBody().length > 0) {
       List<CompanyDTO> companies = ThirdPartyApiManipulator.fromFreeApi(response.getBody());
       List<CompanyDTO> active = companies.stream().filter(CompanyDTO::isActive).toList();
       result.addAll(active);
@@ -103,7 +102,7 @@ public class CompanyService {
     String freeUrl = properties.getPremiumUrl() + "?" + QUERY + query;
     ResponseEntity<PremiumServiceCompaniesDTO[]> response = restTemplate.getForEntity(freeUrl, PremiumServiceCompaniesDTO[].class);
 
-    if (response.hasBody() && response.getBody().length > 0) {
+    if (response.getBody() != null && response.getBody().length > 0) {
       List<CompanyDTO> companies = ThirdPartyApiManipulator.fromPremiumApi(response.getBody());
       List<CompanyDTO> active = companies.stream().filter(CompanyDTO::isActive).toList();
       result.addAll(active);
@@ -129,13 +128,12 @@ public class CompanyService {
     } catch (JsonProcessingException e) {
       logger.warn("Result can't be converted to json");
     }
-    Verification verification = Verification.newBuilder()
+    return Verification.newBuilder()
         .verificationId(verificationId)
         .query(query)
         .timestamp(LocalDateTime.now())
         .result(resultJson)
         .source(source)
         .build();
-    return verification;
   }
 }

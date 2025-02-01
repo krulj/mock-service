@@ -9,6 +9,10 @@ import java.util.List;
 
 public class CompanyManipulator {
 
+  private CompanyManipulator() {
+    // Utility
+  }
+
   public static FreeServiceCompaniesDTO toFreeDto(FreeServiceCompany company) {
     return new FreeServiceCompaniesDTO(
         company.getCin(),

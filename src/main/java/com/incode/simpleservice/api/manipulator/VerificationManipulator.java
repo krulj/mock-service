@@ -9,6 +9,10 @@ public class VerificationManipulator {
 
   private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
+  private VerificationManipulator() {
+    // Utility
+  }
+
   public static VerificationDTO toDto(Verification verification) {
     return new VerificationDTO(
         verification.getVerificationId(),

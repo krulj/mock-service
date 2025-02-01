@@ -1,10 +1,12 @@
 package com.incode.simpleservice.third_party.service;
 
 import com.incode.simpleservice.third_party.dto.FreeServiceCompaniesDTO;
-import com.incode.simpleservice.third_party.repository.ThirdPartyFreeDao;
-import com.incode.simpleservice.third_party.repository.ThirdPartyPremiumDao;
 import com.incode.simpleservice.third_party.dto.PremiumServiceCompaniesDTO;
 import com.incode.simpleservice.third_party.manipulator.CompanyManipulator;
+import com.incode.simpleservice.third_party.repository.ThirdPartyFreeDao;
+import com.incode.simpleservice.third_party.repository.ThirdPartyPremiumDao;
+import com.incode.simpleservice.third_party.repository.model.FreeServiceCompany;
+import com.incode.simpleservice.third_party.repository.model.PremiumServiceCompany;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +23,13 @@ public class ThirdPartyApiService {
   }
 
   public List<FreeServiceCompaniesDTO> queryCompaniesFreeApi(String query) {
-    List<FreeServiceCompaniesDTO> result = CompanyManipulator.toFreeDtos(thirdPartyFreeDao.queryByIdentification(query));
-    return result;
+    List<FreeServiceCompany> companies = thirdPartyFreeDao.queryByIdentification(query);
+    return CompanyManipulator.toFreeDtos(companies);
   }
 
   public List<PremiumServiceCompaniesDTO> queryCompaniesPremiumApi(String query) {
-    List<PremiumServiceCompaniesDTO> result = CompanyManipulator.toPremiumDtos(thirdPartyPremiumDao.queryByIdentification(query));
-    return result;
+    List<PremiumServiceCompany> companies = thirdPartyPremiumDao.queryByIdentification(query);
+    return CompanyManipulator.toPremiumDtos(companies);
   }
 
 }
