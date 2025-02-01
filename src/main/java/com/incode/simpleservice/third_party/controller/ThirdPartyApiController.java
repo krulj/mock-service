@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/v1/third-party")
 public class ThirdPartyApiController {
 
-  private ThirdPartyApiService service;
+  private final ThirdPartyApiService service;
 
   public ThirdPartyApiController(ThirdPartyApiService service) {
     this.service = service;

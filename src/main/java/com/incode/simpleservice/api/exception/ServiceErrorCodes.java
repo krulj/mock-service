@@ -8,8 +8,12 @@ public enum ServiceErrorCodes {
 
   // Verification
   VERIFICATION_NOT_FOUND(20000, "Verification with provided id not found"),
-  VERIFICATION_NON_UNIQUE(20001, "Verification with provided id is not unique");
+  VERIFICATION_NON_UNIQUE(20001, "Verification with provided id is not unique"),
 
+  //General
+  MISSING_REQUEST_PARAM(30000, "Missing request parameter"),
+  INVALID_UUID_REQUEST_PARAM(30001, "Invalid request parameter. Value should be UUID."),
+  INTERNAL_SERVICE_ERROR(30002, "Internal server error");
 
   private final String description;
   private final int code;

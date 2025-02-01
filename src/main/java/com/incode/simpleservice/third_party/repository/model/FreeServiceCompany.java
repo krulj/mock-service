@@ -23,9 +23,6 @@ public class FreeServiceCompany {
   private String address;
   private Boolean isActive;
 
-  public FreeServiceCompany() {
-  }
-
   public Long getId() {
     return id;
   }

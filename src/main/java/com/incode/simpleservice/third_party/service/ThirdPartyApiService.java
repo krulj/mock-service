@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class ThirdPartyApiService {
 
-  private ThirdPartyFreeDao thirdPartyFreeDao;
-  private ThirdPartyPremiumDao thirdPartyPremiumDao;
+  private final ThirdPartyFreeDao thirdPartyFreeDao;
+  private final ThirdPartyPremiumDao thirdPartyPremiumDao;
 
   public ThirdPartyApiService(ThirdPartyFreeDao thirdPartyFreeDao, ThirdPartyPremiumDao thirdPartyPremiumDao) {
     this.thirdPartyFreeDao = thirdPartyFreeDao;

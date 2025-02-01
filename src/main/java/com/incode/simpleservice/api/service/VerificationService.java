@@ -16,7 +16,7 @@ public class VerificationService {
 
   private static final Logger logger = LoggerFactory.getLogger(VerificationService.class);
 
-  private VerificationDAO verificationDAO;
+  private final VerificationDAO verificationDAO;
 
   public VerificationService(VerificationDAO verificationDAO) {
     this.verificationDAO = verificationDAO;

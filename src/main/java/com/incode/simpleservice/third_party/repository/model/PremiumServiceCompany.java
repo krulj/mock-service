@@ -23,9 +23,6 @@ public class PremiumServiceCompany {
   private String fullAddress;
   private Boolean isActive;
 
-  public PremiumServiceCompany() {
-  }
-
   public Long getId() {
     return id;
   }
