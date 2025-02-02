@@ -14,6 +14,8 @@ Exposes three API endpoints:
 
 ## Getting started
 
+### Option 1 - Manualy run app
+
 Start a PostgreSQL instance:
 - ```docker run --name incode-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=incode -p 5432:5432 -d postgres```
 - Locally installed Postgres with database incode can be also used
@@ -21,6 +23,13 @@ Start a PostgreSQL instance:
 Run:
 - ```mvn clean install```
 - ```mvn spring-boot:run```
+
+### Option 2 - Run dockerized app and postgres
+
+- ```mvn clean install```
+- ```docker-compose up --build```
+
+### Access application 
 
 The endpoints will be available at:
 - ```http://localhost:9876/v1/third-party/free-third-party?query=```
